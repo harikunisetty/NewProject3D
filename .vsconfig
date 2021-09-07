@@ -1,6 +1,13 @@
 ﻿{
   "version": "1.0",
+<<<<<<< HEAD
   "components": [ 
     "Microsoft.VisualStudio.Workload.ManagedGame"
   ]
 } 
+=======
+  "components": [
+    "Microsoft.VisualStudio.Workload.ManagedGame"
+  ]
+}
+>>>>>>> fed1c6a0fdbf267b7db0308e054dd475f01b6832
