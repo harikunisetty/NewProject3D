@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryManagement : MonoBehaviour
 {
@@ -20,14 +21,14 @@ public class InventoryManagement : MonoBehaviour
 
     public void AddItem(GameObject item)
     {
-        foreach (Collider collider in item. GetComponent<Collider>()) collider.enabled = false;
-        foreach (MeshCollider mr in item. GetComponent<MeshCollider>()) mr.enabled = false;
+        foreach (Collider collider in item. GetComponents<Collider>()) collider.enabled = false;
+        foreach (MeshRenderer mr in item. GetComponents<MeshRenderer>()) mr.enabled = false;
         for (int i = 0; i <= Instance.itemList.childCount; i++)
         {
             Transform ChItem = Instance.itemList.GetChild(i);
             if (!ChItem.gameObject.activeSelf)
             {
-                ChItem.GetComponent<Image>().Sprite = item.GetComponent<Inventory_item>().itemIcon;
+                ChItem.GetComponent<Image>().sprite = item.GetComponent<Inventory_item>().itemIcon;
                 ChItem.gameObject.SetActive(true);
                 itemObject.Add(item);
                 return;
@@ -35,8 +36,4 @@ public class InventoryManagement : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        
-    }
 }

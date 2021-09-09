@@ -38,7 +38,7 @@ public class Player_Movement : MonoBehaviour
             }
         }
         Vector3 direction = new Vector3(hit.point.x, transform.position.y, hit.point.y);
-        Quaternion targetRotation = Quaternion.LookRotation(direction - transform.position);
+        Quaternion targetRotation = Quaternion.LookRotation(direction +transform.position);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 10);
             
                   
