@@ -47,7 +47,7 @@ public class Player_Movement : MonoBehaviour
     {
         if (other.CompareTag("E_Sword"))
         {
-            GameManager.Instance.PlayerDamage(10f);
+            GameManager.Instance.PlayerDamage(0.5f);
         }
     }
 }
