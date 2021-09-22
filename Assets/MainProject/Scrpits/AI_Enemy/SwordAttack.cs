@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwordAttack : MonoBehaviour
+public class swordAttack : MonoBehaviour
 {
     [SerializeField] BoxCollider boxCollider;
     public BoxCollider BoxCollider { get => boxCollider; set => boxCollider = value; }
     void Awake()
     {
         BoxCollider = GetComponent<BoxCollider>();
-        BoxCollider.enabled = false;
+        BoxCollider.enabled = true;
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        
+
     }
 }

@@ -110,7 +110,7 @@ public class EnemyMovement : MonoBehaviour
 
     void AttackOf()
     {
-        attackScr.BoxCollider.enabled = false;
+        attackScr.BoxCollider.enabled = false;  
     }
 }
 

@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
         if (PlayerHealth > 0f)
         {
             playerHealth -= value;
+            UiManager.Instance.PlayerHealthUI(playerHealth);
 
             if (PlayerHealth <= 0f)
                 PlayerDead();
