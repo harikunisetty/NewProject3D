@@ -43,6 +43,16 @@ public class EnemyMovement : MonoBehaviour
         if (!GameManager.Instance.Player)
             return;
 
+        if (PlayerInRange())
+        {
+            if (PlayerInAttackRange())
+                State = EnemyState.Attack;
+            else
+                State = EnemyState.Chase;
+        }
+        else
+            State = EnemyState.Idle;
+
         switch (State)
         {
             case EnemyState.Idle:
@@ -74,16 +84,6 @@ public class EnemyMovement : MonoBehaviour
             default:
                 break;
         }
-        if (PlayerInRange())
-        {
-            if (PlayerInAttackRange())
-                State = EnemyState.Attack;
-            else
-                State = EnemyState.Chase;
-        }
-        else
-            State = EnemyState.Idle;
-
     }
      bool PlayerInRange()
     {

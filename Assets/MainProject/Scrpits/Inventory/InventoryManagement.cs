@@ -21,8 +21,8 @@ public class InventoryManagement : MonoBehaviour
 
     public void AddItem(GameObject item)
     {
-        foreach (Collider collider in item. GetComponents<Collider>()) collider.enabled = false;
-        foreach (MeshRenderer mr in item. GetComponents<MeshRenderer>()) mr.enabled = false;
+        foreach (Collider collider in item.GetComponents<Collider>()) collider.enabled = false;
+        foreach (MeshRenderer mr in item.GetComponents<MeshRenderer>()) mr.enabled = false;
         for (int i = 0; i <= Instance.itemList.childCount; i++)
         {
             Transform ChItem = Instance.itemList.GetChild(i);
