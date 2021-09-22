@@ -43,4 +43,11 @@ public class Player_Movement : MonoBehaviour
             
                   
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("E_Sword"))
+        {
+            GameManager.Instance.PlayerDamage(10f);
+        }
+    }
 }

@@ -5,11 +5,20 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    [Header("PlayerHealth")]
+
+    [SerializeField] float playerHealth;
+    private float maximumPlayerHealth = 100f;
     [SerializeField] GameObject player;
+
     public GameObject Player
     {
         get { return player; }
     }
+
+    public float PlayerHealth { get => playerHealth; }
+
     void Awake()
     {
         if (Instance != null)
@@ -28,8 +37,26 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void PlayerDamage(float value)
     {
-       
+        if (PlayerHealth > 0f)
+        {
+            playerHealth -= value;
+
+            if (PlayerHealth <= 0f)
+                PlayerDead();
+        }
+        else
+        {
+            PlayerDead();
+        }
+
+
+
+    }
+
+    public void PlayerDead()
+    {
+        Debug.Log("Player Dead");
     }
 }
