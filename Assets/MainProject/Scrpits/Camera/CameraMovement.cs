@@ -11,6 +11,7 @@ public class CameraMovement : MonoBehaviour
     void Start()
     {
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        camOffset = transform.position - playerTrans.position;
     }
 
     void LateUpdate()
@@ -18,7 +19,7 @@ public class CameraMovement : MonoBehaviour
         /*if (playerTrans != null)
             return;*/
         transform.position = Vector3.Slerp(transform.position,
-                              (camOffset + new Vector3(playerTrans.position.x, transform.position.y, playerTrans.position.z)),
+                              ( new Vector3(camOffset.x + playerTrans.position.x, transform.position.y, camOffset.z + playerTrans.position.z)),
                               speed);
     }
 }

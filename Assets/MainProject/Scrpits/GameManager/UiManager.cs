@@ -7,6 +7,7 @@ public class UiManager : MonoBehaviour
 {
     public static UiManager Instance;
     [SerializeField] Image pHealthFill;
+    [SerializeField] Image AiHealthFill;
     void Awake()
     {
         if (Instance != null)
@@ -19,5 +20,9 @@ public class UiManager : MonoBehaviour
     public void PlayerHealthUI(float value)
     {
         pHealthFill.fillAmount = value * 0.01f;
+    }
+    public void AiHealthUI(float HitValue)
+    {
+        AiHealthFill.fillAmount = HitValue * 0.01f;
     }
 }

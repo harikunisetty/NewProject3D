@@ -112,5 +112,13 @@ public class EnemyMovement : MonoBehaviour
     {
         attackScr.BoxCollider.enabled = false;  
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PlayerSword"))
+        {
+            GameManager.Instance.AiDamage(25f);
+        }
+    }
 }
 
