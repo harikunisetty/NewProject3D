@@ -23600,7 +23600,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 829225987}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6885c37d61284324a8fae6414c839c15, type: 3}
   m_Name: 
@@ -33540,6 +33540,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9100000, guid: 018db90f1fbd3144a8903262b307d3e0, type: 2}
     - target: {fileID: 91537697237144109, guid: 8526fc62d267e704aabe14dd3ca9d7ed, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 91537697237144109, guid: 8526fc62d267e704aabe14dd3ca9d7ed, type: 3}
       propertyPath: m_TagString
       value: PlayerSword
       objectReference: {fileID: 0}
@@ -43282,6 +43286,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 9
+  Attack: 0
   anim: {fileID: 0}
   attackScr: {fileID: 0}
 --- !u!143 &1599585861

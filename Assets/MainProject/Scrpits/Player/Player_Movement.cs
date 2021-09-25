@@ -77,7 +77,7 @@ public class Player_Movement : MonoBehaviour
     {
         if (other.CompareTag("E_Sword"))
         {
-            GameManager.Instance.PlayerDamage(5f);
+            GameManager.Instance.PlayerDamage(10f);
             anim.SetTrigger("Damage");
             Attack = true;
         }
