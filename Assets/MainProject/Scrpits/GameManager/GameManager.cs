@@ -20,19 +20,6 @@ public class GameManager : MonoBehaviour
 
     [Header("Game")]
     private bool isGameOver;
-
-
-    [Header("AIHealth")]
-
-    [SerializeField] float AIHealth;
-    private float maximumAiHealth = 100f;
-    [SerializeField] GameObject Ai_Enemy;
-   
-    public float AiHealth
-    {
-        get => AiHealth;
-    }
-    public GameObject Ai_Enemy1 { get => Ai_Enemy;}
     void Awake()
     {
         if (Instance != null)
@@ -48,8 +35,7 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        Ai_Enemy = GameObject.FindGameObjectWithTag("Enemy");
-        /* playerHealth = maximumPlayerHealth;*/
+       /* playerHealth = maximumPlayerHealth;*/
 
         isGameOver = false;
     }
@@ -73,26 +59,5 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Player Dead");
         isGameOver = true;
-    }
-
-    public void AiDamage(float HitValue)
-    {
-        if (AIHealth > 0f)
-        {
-            AIHealth -= HitValue;
-            UiManager.Instance.AiHealthUI(AIHealth);
-
-            if (AIHealth <= 0f)
-                AiDead();
-        }
-        else
-        {
-            AiDead();
-        }
-    }
-    public void AiDead()
-    {
-        Debug.Log("Ai Dead");
-        
     }
 }

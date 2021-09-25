@@ -25,6 +25,9 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] Rigidbody rigidbody;
     private NavMeshAgent agent;
 
+    /*public float HitValue = 10f;*/
+   
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -112,12 +115,12 @@ public class EnemyMovement : MonoBehaviour
     {
         attackScr.BoxCollider.enabled = false;  
     }
-
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerSword"))
+        if (other.gameObject.CompareTag("PlayerSword"))
         {
-            GameManager.Instance.AiDamage(25f);
+           AI_Health E_Health = GameObject.FindGameObjectWithTag("Enemy").GetComponent<AI_Health>();
+            E_Health.AiDamage(10f);
         }
     }
 }

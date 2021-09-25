@@ -9,7 +9,7 @@ public class swordAttack : MonoBehaviour
     void Awake()
     {
         BoxCollider = GetComponent<BoxCollider>();
-        BoxCollider.enabled = true;
+        BoxCollider.enabled = false;
     }
 
     
