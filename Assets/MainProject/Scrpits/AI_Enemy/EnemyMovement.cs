@@ -14,15 +14,18 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] EnemyState State = EnemyState.Idle;
 
     [Header("Enemy")]
-
     [SerializeField] float chaseRange;
     [SerializeField] float attackRange=1.5f;
 
     [Header("Components")]
-
-    [SerializeField] SwordAttack attackScr;
     [SerializeField] Animator animator;
     [SerializeField] Rigidbody rigidbody;
+
+    [Header("Scripts")]
+    [SerializeField] SwordAttack attackScr;
+    [SerializeField] AI_Health aiHealth;
+
+    [Header("AI")]
     private NavMeshAgent agent;
 
     /*public float HitValue = 10f;*/
@@ -33,6 +36,8 @@ public class EnemyMovement : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody>();
+
+        aiHealth = GetComponent<AI_Health>();
     }
 
     void Start()
@@ -119,8 +124,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("PlayerSword"))
         {
-           AI_Health E_Health = GameObject.FindGameObjectWithTag("Enemy").GetComponent<AI_Health>();
-            E_Health.AiDamage(10f);
+            aiHealth.AiDamage(10f);
         }
     }
 }

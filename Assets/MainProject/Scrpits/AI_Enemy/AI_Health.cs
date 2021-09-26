@@ -11,7 +11,6 @@ public class AI_Health : MonoBehaviour
     private float maximumAiHealth = 100f;
     void Start()
     {
-
         AIHealth = maximumAiHealth;
     }
     public void AiDamage(float hitvalue)

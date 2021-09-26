@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class swordAttack : MonoBehaviour
+public class SwordAttack : MonoBehaviour
 {
     [SerializeField] BoxCollider boxCollider;
     public BoxCollider BoxCollider { get => boxCollider; set => boxCollider = value; }

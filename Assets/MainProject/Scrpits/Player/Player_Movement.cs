@@ -27,10 +27,11 @@ public class Player_Movement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
+
+        attackScr = gameObject.GetComponentInChildren<Player_sword_Attack>();
     }
     void Start()
     {
-       
     }
       void Update()
     {
@@ -69,10 +70,12 @@ public class Player_Movement : MonoBehaviour
         attackScr.BoxCollider.enabled = true;
     }
 
-    void AttackOf()
+    void AttackOff()
     {
         attackScr.BoxCollider.enabled = false;
+        Debug.Log("Off");
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("E_Sword"))
