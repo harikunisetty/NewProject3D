@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwordAttack : MonoBehaviour
+public class swordAttack : MonoBehaviour
 {
     [SerializeField] BoxCollider boxCollider;
     public BoxCollider BoxCollider { get => boxCollider; set => boxCollider = value; }
@@ -10,5 +10,11 @@ public class SwordAttack : MonoBehaviour
     {
         BoxCollider = GetComponent<BoxCollider>();
         BoxCollider.enabled = false;
+    }
+
+    
+    void Update()
+    {
+
     }
 }

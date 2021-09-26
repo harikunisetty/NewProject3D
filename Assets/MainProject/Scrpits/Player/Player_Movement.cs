@@ -16,9 +16,11 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
     [SerializeField] RaycastHit hit;
     private Ray ray;
+    public bool Attack;
 
     [Header("Components")]
     [SerializeField] Animator anim;
+    [SerializeField] Player_sword_Attack attackScr;
 
 
     private void Awake()
@@ -42,6 +44,7 @@ public class Player_Movement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X))
         {
             anim.SetTrigger("Attack");
+            Attack = false;
         }
       }
     private void FixedUpdate()
@@ -61,14 +64,22 @@ public class Player_Movement : MonoBehaviour
             
                   
     }
-    private void OnTriggerStay(Collider other)
+    void AttackOn()
     {
+        attackScr.BoxCollider.enabled = true;
+    }
 
+    void AttackOf()
+    {
+        attackScr.BoxCollider.enabled = false;
+    }
+    private void OnTriggerEnter(Collider other)
+    {
         if (other.CompareTag("E_Sword"))
         {
-            GameManager.Instance.PlayerDamage(5f);
-            Debug.Log("Damage" + other.tag);
-            anim.SetTrigger("TakeDamage");
+            GameManager.Instance.PlayerDamage(10f);
+            anim.SetTrigger("Damage");
+            Attack = true;
         }
     }
 }
