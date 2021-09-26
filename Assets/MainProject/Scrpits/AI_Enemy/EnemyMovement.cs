@@ -20,7 +20,7 @@ public class EnemyMovement : MonoBehaviour
 
     [Header("Components")]
 
-    [SerializeField] swordAttack attackScr;
+    [SerializeField] SwordAttack attackScr;
     [SerializeField] Animator animator;
     [SerializeField] Rigidbody rigidbody;
     private NavMeshAgent agent;
@@ -108,7 +108,7 @@ public class EnemyMovement : MonoBehaviour
         attackScr.BoxCollider.enabled = true;
     }
 
-    void AttackOf()
+    void AttackOff()
     {
         attackScr.BoxCollider.enabled = false;  
     }

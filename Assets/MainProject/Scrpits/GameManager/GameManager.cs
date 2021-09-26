@@ -71,7 +71,6 @@ public class GameManager : MonoBehaviour
     }
     public void PlayerDead()
     {
-        Debug.Log("Player Dead");
         isGameOver = true;
     }
 
