@@ -22,6 +22,11 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] Animator anim;
     [SerializeField] Player_sword_Attack attackScr;
 
+    [Header("EnmeyDirectionPoint")]
+    public Transform Enemy;
+    private float distance;
+    public float speed;
+    public float closeDirection;
 
     private void Awake()
     {
@@ -29,9 +34,12 @@ public class Player_Movement : MonoBehaviour
         anim = GetComponent<Animator>();
 
         attackScr = gameObject.GetComponentInChildren<Player_sword_Attack>();
+
+        Enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Transform>();
     }
     void Start()
     {
+
     }
       void Update()
     {
@@ -47,6 +55,11 @@ public class Player_Movement : MonoBehaviour
             anim.SetTrigger("Attack");
             Attack = false;
         }
+        //Enemy 
+        distance = Vector3.Distance(Enemy.position, transform.position);
+        if (distance <= closeDirection)
+            transform.LookAt(Enemy);
+
       }
     private void FixedUpdate()
     {

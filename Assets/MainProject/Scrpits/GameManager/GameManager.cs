@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     [Header("PlayerHealth")]
 
     [SerializeField] float playerHealth;
-    private float maximumPlayerHealth = 100f;
+   /* private float maximumPlayerHealth = 100f;*/
     [SerializeField] GameObject player;
     public GameObject Player
     {

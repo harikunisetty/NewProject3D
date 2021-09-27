@@ -36,7 +36,6 @@ public class EnemyMovement : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody>();
-
         aiHealth = GetComponent<AI_Health>();
     }
 
