@@ -25,7 +25,6 @@ public class Player_Movement : MonoBehaviour
     [Header("EnmeyDirectionPoint")]
     public Transform Enemy;
     private float distance;
-    public float speed;
     public float closeDirection;
 
     private void Awake()
