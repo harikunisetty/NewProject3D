@@ -27,6 +27,21 @@ public class Player_Movement : MonoBehaviour
     private float distance;
     public float closeDirection;
 
+    [Header("Attack")]
+    [SerializeField] bool isAttacking;
+    [SerializeField] AttackType attackType;
+
+
+    [Header("Special Attack")]
+    [SerializeField] LayerMask splLayerMask;
+    [SerializeField] bool canSplAttack01, canFireSplAttack01;
+    [SerializeField] float delayTime = 3f;
+
+    public enum AttackType
+    {
+        Normal, Attack, SPLAttack01
+    }
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -38,7 +53,10 @@ public class Player_Movement : MonoBehaviour
     }
     void Start()
     {
-
+        isAttacking = false;
+        canSplAttack01 = false;
+        canFireSplAttack01 = true;
+        attackType = AttackType.Normal;
     }
       void Update()
     {
@@ -49,17 +67,39 @@ public class Player_Movement : MonoBehaviour
         anim.SetFloat("Speed", moveDirection.z);
         anim.SetFloat("Direction", moveDirection.x);
 
-        if (Input.GetKeyDown(KeyCode.X))
+       /* if (Input.GetKeyDown(KeyCode.X))
         {
             anim.SetTrigger("Attack");
             Attack = false;
-        }
+        }*/
         //Enemy 
         distance = Vector3.Distance(Enemy.position, transform.position);
         if (distance <= closeDirection)
             transform.LookAt(Enemy);
 
-      }
+
+        //Attacking
+
+        if (Input.GetKeyDown(KeyCode.X) && isAttacking == false)
+        {
+            isAttacking = true;
+            PlayerAttack();
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (isAttacking == false && canSplAttack01)
+            {
+                if (canFireSplAttack01)
+                {
+                    isAttacking = true;
+                    canFireSplAttack01 = false;
+                    PlayerAttack();
+                }
+            }
+        }
+
+    }
     private void FixedUpdate()
     {
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -77,12 +117,12 @@ public class Player_Movement : MonoBehaviour
             
                   
     }
-    void AttackOn()
+    void PlayerAttackOn()
     {
-        attackScr.BoxCollider.enabled = true;
+        //AttackOff
     }
 
-    void AttackOff()
+    void PlayerAttackOff()
     {
         attackScr.BoxCollider.enabled = false;
         Debug.Log("Off");
@@ -96,5 +136,59 @@ public class Player_Movement : MonoBehaviour
             anim.SetTrigger("Damage");
             Attack = true;
         }
+
+        if (other.CompareTag("SPLAttack01"))    
+        {
+            canSplAttack01 = true;
+            Destroy(other.gameObject);
+        }
+        canSplAttack01 = true;
+    }
+    void PlayerAttack()
+    {
+        if (Input.GetKeyDown(KeyCode.X))
+            attackType = AttackType.Attack;
+        else if (Input.GetKeyDown(KeyCode.C))
+            attackType = AttackType.SPLAttack01;
+
+        switch (attackType)
+        {
+            case AttackType.Attack:
+                anim.SetTrigger("Attack");
+
+                break;
+            case AttackType.SPLAttack01:
+                anim.SetTrigger("SPLAttack");
+
+                Invoke("SPLDelayCallAttack", 0.525f);
+                break;
+            default:
+                break;
+        }
+
+        isAttacking = false;
+        attackType = AttackType.Normal;
+    }
+
+    void SPLDelayCallAttack()
+    {
+        CancelInvoke();
+
+        var sphCollider = Physics.OverlapSphere(transform.position, 3.5f, splLayerMask);
+        if (sphCollider.Length > 0)
+        {
+            foreach (var coll in sphCollider)
+            {
+                coll.gameObject.SetActive(false);
+            }
+        }
+
+        Invoke("DelaySPLAttack", delayTime);
+    }
+
+    void DelaySPLAttack()
+    {
+        CancelInvoke();
+        canFireSplAttack01 = true;
     }
 }
