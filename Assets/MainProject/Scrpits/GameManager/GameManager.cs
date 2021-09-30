@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] float playerHealth;
    /* private float maximumPlayerHealth = 100f;*/
     [SerializeField] GameObject player;
+    [SerializeField] Player_Movement playerController;
     public GameObject Player
     {
         get { return player; }
@@ -20,6 +22,10 @@ public class GameManager : MonoBehaviour
 
     [Header("Game")]
     private bool isGameOver;
+    [Header("level")]
+    [SerializeField] LevelObject levelObject;
+    [SerializeField] string nextLevelName;
+    [SerializeField] int nextLevelIndex;
     void Awake()
     {
         if (Instance != null)
@@ -30,16 +36,24 @@ public class GameManager : MonoBehaviour
         }
         else
             Instance = this;
+        /*DontDestroyOnLoad(this.gameObject);*/
 
     }
     public void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-       /* playerHealth = maximumPlayerHealth;*/
-
+        /* playerHealth = maximumPlayerHealth;*/
+        playerController = GetComponent<Player_Movement>();
+        levelObject = Object.FindObjectOfType<LevelObject>();
         isGameOver = false;
     }
-
+    private void Update()
+    {
+        if(levelObject!=null&& levelObject.IsObjectiveCompleted)
+        {
+            LevelEnded();
+        }
+    }
     public void PlayerDamage(float value)
     {
         if (PlayerHealth > 0f)
@@ -58,5 +72,23 @@ public class GameManager : MonoBehaviour
     public void PlayerDead()
     {
         isGameOver = true;
+    }
+    void LevelEnded()
+    {
+        if (playerController != null)
+        {
+            playerController.enabled = false;
+
+            player.GetComponent<CharacterController>().SimpleMove(Vector3.zero);
+            LoadNextLevel(nextLevelIndex);
+        }
+    }
+    void LoadNextLevel(int Index)
+    {
+        SceneManager.LoadScene(Index);
+    }
+    void LoadNextLevel(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
     }
 }
