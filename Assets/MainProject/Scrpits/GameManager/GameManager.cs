@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         /* playerHealth = maximumPlayerHealth;*/
-        playerController = GetComponent<Player_Movement>();
+        playerController = player.GetComponent<Player_Movement>();
         levelObject = Object.FindObjectOfType<LevelObject>();
         isGameOver = false;
     }
