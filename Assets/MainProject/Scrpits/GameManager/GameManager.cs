@@ -7,72 +7,59 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    [Header("Player")]
+    [Header("PlayerHealth")]
+
+    [SerializeField] float playerHealth;
+   /* private float maximumPlayerHealth = 100f;*/
     [SerializeField] GameObject player;
     [SerializeField] Player_Movement playerController;
-    [SerializeField] float pHealth;
-    private float maxPlayerHealth = 100;
-    public float PlayerHealth { get => pHealth; }
-    public GameObject Player { get { return player; } }
-
-    [Header("Player Score")]
-    [SerializeField] int score = 0;
-    public int Score { get => score; }
-
-    [Header("Levels")]
-    [SerializeField] int nextLevelIndex;
-    [SerializeField] string nextLevelName;
-    [SerializeField] LevelObject levelObjective;
+    public GameObject Player
+    {
+        get { return player; }
+    }
+    public float PlayerHealth { get => playerHealth; }
+    public bool IsGameOver { get => isGameOver;}
 
     [Header("Game")]
     private bool isGameOver;
-    public bool IsGameOver { get => isGameOver; }
-
-
-    private void Awake()
+    [Header("level")]
+    [SerializeField] LevelObject levelObject;
+    [SerializeField] string nextLevelName;
+    [SerializeField] int nextLevelIndex;
+    void Awake()
     {
         if (Instance != null)
         {
+
             DestroyImmediate(this.gameObject);
             return;
         }
         else
             Instance = this;
+        /*DontDestroyOnLoad(this.gameObject);*/
 
-        // DontDestroyOnLoad(this.gameObject);
     }
-
-    void Start()
+    public void Start()
     {
-        // Player Setup
         player = GameObject.FindGameObjectWithTag("Player");
+        /* playerHealth = maximumPlayerHealth;*/
         playerController = player.GetComponent<Player_Movement>();
-
-        levelObjective = Object.FindObjectOfType<LevelObject>();
-
-        pHealth = maxPlayerHealth;
-
+        levelObject = Object.FindObjectOfType<LevelObject>();
         isGameOver = false;
-
-        // Validate Data
-        PlayerScore(PlayerPrefs.GetInt("PlayerScore"));
-
-        Debug.Log(PlayerPrefs.GetInt("PlayerScore"));
     }
-
-    void Update()
+    private void Update()
     {
-        if (levelObjective != null && levelObjective.IsObjectiveCompleted)
+        if(levelObject!=null&& levelObject.IsObjectiveCompleted)
         {
             LevelEnded();
         }
     }
-
     public void PlayerDamage(float value)
     {
         if (PlayerHealth > 0f)
         {
-            pHealth -= value;
+            playerHealth -= value;
+            UiManager.Instance.PlayerHealthUI(playerHealth);
 
             if (PlayerHealth <= 0f)
                 PlayerDead();
@@ -82,74 +69,26 @@ public class GameManager : MonoBehaviour
             PlayerDead();
         }
     }
-
-    public void PlayerScore(int value)
-    {
-        score += value; // Variable value
-
-        UiManager.Instance.UpdateScoreUI(); // UI
-
-        // Save Playe Score Data
-        PlayerPrefs.SetInt("PlayerScore", Score);
-
-        Debug.Log(PlayerPrefs.GetInt("PlayerScore"));
-    }
-
     public void PlayerDead()
     {
         isGameOver = true;
-
-        // Save Game State
-        // Kill the player
-        // Move Game Over Screen
     }
-
     void LevelEnded()
     {
         if (playerController != null)
         {
-            // Disable player controll
             playerController.enabled = false;
 
-            // Stop Movement
             player.GetComponent<CharacterController>().SimpleMove(Vector3.zero);
-
-            // Load Next level
-            // LoadNextLevel(nextLevelName);
-            LoadNextLevel();
+            LoadNextLevel(nextLevelIndex);
         }
     }
-
-    void ReloadLevel()
+    void LoadNextLevel(int Index)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(Index);
     }
-
-    void LoadNextLevel()
-    {
-        // Get next level build index
-        int nextLevelIndex = (SceneManager.GetActiveScene().buildIndex + 1) % SceneManager.sceneCountInBuildSettings;
-
-        LoadNextLevel(nextLevelIndex);
-    }
-    public void LoadNextLevel(int index)
-    {
-        if (index > 0 && index <= SceneManager.sceneCountInBuildSettings)
-        {
-            SceneManager.LoadScene(index);
-        }
-    }
-
     void LoadNextLevel(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
-    }
-
-
-    public void GameOver()
-    {
-        // Clear Game Data
-        PlayerPrefs.DeleteAll();
-        Application.Quit();
     }
 }
