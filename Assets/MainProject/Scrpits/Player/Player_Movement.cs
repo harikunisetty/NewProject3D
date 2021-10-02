@@ -49,7 +49,7 @@ public class Player_Movement : MonoBehaviour
 
         attackScr = gameObject.GetComponentInChildren<Player_sword_Attack>();
 
-        Enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Transform>();
+       
     }
     void Start()
     {

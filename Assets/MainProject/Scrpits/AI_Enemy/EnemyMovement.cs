@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public enum EnemyState
 {
-    Idle , Chase , Attack , Dead
+    Idle , Chase , Attack , Death
 }
 public class EnemyMovement : MonoBehaviour
 {
@@ -28,8 +28,8 @@ public class EnemyMovement : MonoBehaviour
     [Header("AI")]
     private NavMeshAgent agent;
 
-    /*public float HitValue = 10f;*/
-   
+    public float HitValue = 10f;
+
 
     private void Awake()
     {
@@ -50,6 +50,43 @@ public class EnemyMovement : MonoBehaviour
         if (!GameManager.Instance.Player)
             return;
 
+       
+
+        switch (State)
+        {
+            case EnemyState.Idle:
+                agent.isStopped = true;
+
+                // Animation
+                animator.SetFloat("Move", 0f);
+                animator.SetBool("Attack", false);
+                break;
+            case EnemyState.Chase:
+                agent.isStopped = false;
+
+                agent.SetDestination(GameManager.Instance.Player.transform.position);
+
+                // Animation
+                animator.SetFloat("Move", rigidbody.velocity.y);
+                animator.SetBool("Attack", false);
+                break;
+            case EnemyState.Attack:
+                agent.isStopped = true;
+
+                // Animation
+                animator.SetFloat("Move", 0f);
+                animator.SetBool("Attack", true);
+
+                break;
+            case EnemyState.Death:
+                agent.isStopped = true;
+
+                // Animation
+                animator.SetFloat("Move", 0f);
+                break;
+            default:
+                break;
+        }
         if (PlayerInRange())
         {
             if (PlayerInAttackRange())
@@ -59,38 +96,6 @@ public class EnemyMovement : MonoBehaviour
         }
         else
             State = EnemyState.Idle;
-
-        switch (State)
-        {
-            case EnemyState.Idle:
-                agent.isStopped = true;
-        
-                animator.SetFloat("Move", 0f);
-                animator.SetBool("Attack", false);
-                break;
-            case EnemyState.Chase:
-                agent.isStopped = false;
-
-                agent.SetDestination(GameManager.Instance.Player.transform.position);
-
-                animator.SetFloat("Move", rigidbody.velocity.y);
-                animator.SetBool("Attack", false);
-                break;
-            case EnemyState.Attack:
-                agent.isStopped = true;
-
-                animator.SetFloat("Move", 0f);
-                animator.SetBool("Attack", true);
-
-                break;
-            case EnemyState.Dead:
-                agent.isStopped = true;
-
-                animator.SetFloat("Move", 0f);
-                break;
-            default:
-                break;
-        }
     }
      bool PlayerInRange()
     {
@@ -106,10 +111,13 @@ public class EnemyMovement : MonoBehaviour
         else
             return false;
     }
-    void Dead()
+    public void Death()
     {
+        Debug.Log("AI Death");
+        GameManager.Instance.PlayerScore(20);
         this.gameObject.SetActive(false);
     }
+
     void AttackOn()
     {
         attackScr.BoxCollider.enabled = true;
