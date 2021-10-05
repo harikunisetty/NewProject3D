@@ -6,33 +6,42 @@ public class Menu : MonoBehaviour
 {
     public void PlayButton()
     {
-        GameManager gameManager = Object.FindObjectOfType<GameManager>();
+        //GameManager gameManager = Object.FindObjectOfType<GameManager>();
 
-        if (gameManager != null)
+        if (GameManager.Instance != null)
         {
-            gameManager.LoadNextLevel();
+            GameManager.Instance.LoadNextLevel();
         }
     }
 
     public void SettingMenu()
     {
-        MenuManager menuManger = Object.FindObjectOfType<MenuManager>();
+       //MenuManager menuManger = Object.FindObjectOfType<MenuManager>();
         Menu settingMenu = transform.parent.Find("Settings Menu(Clone)").GetComponent<Menu>();
 
-        if (menuManger != null && settingMenu != null)
+        if (MenuManager.Instance != null && settingMenu != null)
         {
-            menuManger.OpenMenu(settingMenu);
+            MenuManager.Instance.OpenMenu(settingMenu);
         }
     }
 
     public void CreditMenu()
     {
-        MenuManager menuManger = Object.FindObjectOfType<MenuManager>();
+        //MenuManager menuManger = Object.FindObjectOfType<MenuManager>();
         Menu creditsmenu = transform.parent.Find("Credits Menu(Clone)").GetComponent<Menu>();
 
-        if (menuManger != null && creditsmenu != null)
+        if (MenuManager.Instance != null && creditsmenu != null)
         {
-            menuManger.OpenMenu(creditsmenu);
+            MenuManager.Instance.OpenMenu(creditsmenu);
+        }
+    }
+
+    public void Back()
+    {
+        //MenuManager menuManger = Object.FindObjectOfType<MenuManager>();
+        if (MenuManager.Instance != null)
+        {
+            MenuManager.Instance.CloseMenu();
         }
     }
 }

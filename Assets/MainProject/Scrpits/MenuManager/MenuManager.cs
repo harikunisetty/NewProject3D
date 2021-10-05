@@ -13,6 +13,26 @@ public class MenuManager : MonoBehaviour
     [Header("Stack Menus")]
     [SerializeField] Stack<Menu> menuStack = new Stack<Menu>();
 
+    public static MenuManager Instance;
+
+    private void Awake()
+    {
+        if (Instance != this)
+        {
+            DestroyImmediate(this.gameObject);
+            return;
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        Instance = null;
+    }
+
     void Start()
     {
         CreateMenus();
