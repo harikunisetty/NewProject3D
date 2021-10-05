@@ -67,11 +67,7 @@ public class Player_Movement : MonoBehaviour
         anim.SetFloat("Speed", moveDirection.z);
         anim.SetFloat("Direction", moveDirection.x);
 
-       /* if (Input.GetKeyDown(KeyCode.X))
-        {
-            anim.SetTrigger("Attack");
-            Attack = false;
-        }*/
+       
         //Enemy 
         distance = Vector3.Distance(Enemy.position, transform.position);
         if (distance <= closeDirection)
@@ -179,7 +175,7 @@ public class Player_Movement : MonoBehaviour
         {
             foreach (var coll in sphCollider)
             {
-                coll.gameObject.SetActive(false);
+                coll.GetComponent<EnemyMovement>().Death();
             }
         }
 

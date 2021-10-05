@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        if (SceneManager.GetActiveScene().name == "MainUI")
+            return;
         // Player Setup
         player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<Player_Movement>();
@@ -120,12 +122,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void ReloadLevel()
+    public void ReloadLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    void LoadNextLevel()
+    public void LoadNextLevel()
     {
         // Get next level build index
         int nextLevelIndex = (SceneManager.GetActiveScene().buildIndex + 1) % SceneManager.sceneCountInBuildSettings;
@@ -140,7 +142,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void LoadNextLevel(string sceneName)
+    public void LoadNextLevel(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }
