@@ -2,46 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Menu : MonoBehaviour
+ public abstract class Menu<T> : Menu where T : Menu<T>
+    {
+        private static T instance;
+        public static T Instance { get { return instance; } }
+
+        protected virtual void Awake()
+        {
+            if (Instance != null)
+                DestroyImmediate(this.gameObject);
+            else
+                instance = (T)this;
+        }
+
+        protected virtual void OnDestory()
+        {
+            instance = null;
+        }
+ }
+
+ public abstract class Menu : MonoBehaviour
 {
-    public void PlayButton()
-    {
-        //GameManager gameManager = Object.FindObjectOfType<GameManager>();
+    private static Menu instance;
+    public static Menu Instance { get { return instance; } }
 
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.LoadNextLevel();
-        }
+    void Awake()
+    {
+        if (Instance != null)
+            DestroyImmediate(this.gameObject);
+        else
+            instance = this;
     }
 
-    public void SettingMenu()
+    void OnDestory()
     {
-       //MenuManager menuManger = Object.FindObjectOfType<MenuManager>();
-        Menu settingMenu = transform.parent.Find("Settings Menu(Clone)").GetComponent<Menu>();
-
-        if (MenuManager.Instance != null && settingMenu != null)
-        {
-            MenuManager.Instance.OpenMenu(settingMenu);
-        }
+        instance = null;
     }
 
-    public void CreditMenu()
+    public virtual void BackButton()
     {
-        //MenuManager menuManger = Object.FindObjectOfType<MenuManager>();
-        Menu creditsmenu = transform.parent.Find("Credits Menu(Clone)").GetComponent<Menu>();
-
-        if (MenuManager.Instance != null && creditsmenu != null)
-        {
-            MenuManager.Instance.OpenMenu(creditsmenu);
-        }
-    }
-
-    public void Back()
-    {
-        //MenuManager menuManger = Object.FindObjectOfType<MenuManager>();
         if (MenuManager.Instance != null)
         {
             MenuManager.Instance.CloseMenu();
         }
     }
 }
+    
+

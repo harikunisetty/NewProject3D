@@ -4,102 +4,103 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
-    [Header("Menus")]
-    [SerializeField] Menu mainMenuPrefab;
-    [SerializeField] Menu settingsMenuPrefab;
-    [SerializeField] Menu creditsMenuPrefab;
-    [SerializeField] Transform menuParentObject;
+    [SerializeField] Menu mainMenuPrefabs;
+    [SerializeField] Menu settingsMenu;
+    [SerializeField] Menu creditsMenu;
+    [SerializeField] Transform menuParentObj;
 
-    [Header("Stack Menus")]
-    [SerializeField] Stack<Menu> menuStack = new Stack<Menu>();
+    [Header("Stack")]
 
-    public static MenuManager Instance;
+    [SerializeField] Stack<Menu> Stackmenu = new Stack<Menu>();
 
-    private void Awake()
+    [Header("MenuManager")]
+    private static MenuManager instance;
+    private Menu menuInstance;
+
+    public static MenuManager Instance { get => instance; }
+
+    public void Awake()
     {
-        if (Instance != this)
+        if (Instance != null)
         {
             DestroyImmediate(this.gameObject);
-            return;
         }
         else
         {
-            Instance = this;
+            instance = this;
         }
     }
-
-    private void OnDestroy()
+    public void OnDestroy()
     {
-        Instance = null;
+        instance = null;
     }
 
     void Start()
     {
-        CreateMenus();
+        CreateMenu();
     }
 
-    void CreateMenus()
-    {
-        if (menuParentObject == null)
-        {
-            GameObject menusObj = new GameObject("Menus"); 
-            menuParentObject = menusObj.transform; 
-        }
-
-        Menu[] menus = { mainMenuPrefab, settingsMenuPrefab, creditsMenuPrefab };
-
-        foreach (Menu menuPrefab in menus)
-        {
-            if (menuPrefab != null)
-            {
-                Menu menuInstance = Instantiate(menuPrefab, menuParentObject);
-
-                if (menuPrefab != mainMenuPrefab)
-                {
-                    menuPrefab.gameObject.SetActive(false);
-                }
-                else
-                {
-                    OpenMenu(menuInstance);
-                }
-            }
-        }
-    }
-
-    public void OpenMenu(Menu menuInstance)
-    {
-        if (menuInstance == null)
+  
+   void CreateMenu()
+   {
+        if (menuParentObj != null)
         {
             return;
         }
 
-        if (menuStack.Count > 0)
+        GameObject menuObj = new GameObject("Menu");
+        menuParentObj = menuObj.transform;
+
+        Menu[] menus = { mainMenuPrefabs, settingsMenu, creditsMenu };
+        foreach(Menu menuPrefabs in menus)
         {
-            foreach (Menu menuitem in menuStack)
+            if (menuPrefabs != null)
+            {
+                Menu menuInstance = Instantiate(menuPrefabs, menuParentObj);
+            }
+            if (menuPrefabs != menuParentObj)
+            {
+                menuPrefabs.gameObject.SetActive(false);
+            }
+            else
+            {
+                OpenMenu(menuInstance);
+            }
+        }
+   }
+    public void OpenMenu(Menu menuInstance)
+    {
+        if(menuInstance == null)
+        {
+            return;
+        }
+
+        if(Stackmenu.Count > 0)
+        {
+            foreach (Menu menuitem in Stackmenu)
             {
                 menuitem.gameObject.SetActive(false);
             }
         }
 
         menuInstance.gameObject.SetActive(true); 
-        menuStack.Push(menuInstance); 
+        Stackmenu.Push(menuInstance); 
     }
 
     public void CloseMenu()
     {
-        if (menuStack.Count == 0)
+        if (Stackmenu.Count == 0)
         {
             return;
         }
 
-        Menu topMenu = menuStack.Pop();
+        Menu topMenu = Stackmenu.Pop();
         topMenu.gameObject.SetActive(false);
 
-        if (menuStack.Count > 0)
+        if (Stackmenu.Count > 0)
         {
-            Menu nextMenu = menuStack.Peek();
+            Menu nextMenu = Stackmenu.Peek();
             nextMenu.gameObject.SetActive(true);
         }
     }
 }
-
