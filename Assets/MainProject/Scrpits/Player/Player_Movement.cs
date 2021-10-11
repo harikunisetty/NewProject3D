@@ -69,13 +69,16 @@ public class Player_Movement : MonoBehaviour
 
        
         //Enemy 
-        distance = Vector3.Distance(Enemy.position, transform.position);
-        if (distance <= closeDirection)
-            transform.LookAt(Enemy);
+        if(Enemy != null)
+        {
+            distance = Vector3.Distance(Enemy.position, transform.position);
+            if (distance <= closeDirection)
+                transform.LookAt(Enemy);
+        }
+       
 
 
         //Attacking
-
         if (Input.GetKeyDown(KeyCode.X) && isAttacking == false)
         {
             isAttacking = true;

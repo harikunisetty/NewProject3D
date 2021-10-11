@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField] Menu mainMenuPrefabs;
-    [SerializeField] Menu settingsMenu;
-    [SerializeField] Menu creditsMenu;
+    [SerializeField] MainMenu mainMenuPrefabs;
+    [SerializeField] SettingsMenu settingsMenu;
+    [SerializeField] CreditsMenu creditsMenu;
+    [SerializeField] GameMenu gameMenu;
     [SerializeField] Transform menuParentObj;
 
     [Header("Stack")]
@@ -15,7 +16,7 @@ public class MenuManager : MonoBehaviour
 
     [Header("MenuManager")]
     private static MenuManager instance;
-    private Menu menuInstance;
+    //private Menu menuInstance;
 
     public static MenuManager Instance { get => instance; }
 
@@ -28,19 +29,16 @@ public class MenuManager : MonoBehaviour
         else
         {
             instance = this;
+            CreateMenu();
         }
+
+        DontDestroyOnLoad(this);
     }
     public void OnDestroy()
     {
         instance = null;
     }
 
-    void Start()
-    {
-        CreateMenu();
-    }
-
-  
    void CreateMenu()
    {
         if (menuParentObj != null)
@@ -51,21 +49,23 @@ public class MenuManager : MonoBehaviour
         GameObject menuObj = new GameObject("Menu");
         menuParentObj = menuObj.transform;
 
-        Menu[] menus = { mainMenuPrefabs, settingsMenu, creditsMenu };
+        Menu[] menus = { mainMenuPrefabs, settingsMenu, creditsMenu, gameMenu };
         foreach(Menu menuPrefabs in menus)
         {
             if (menuPrefabs != null)
             {
                 Menu menuInstance = Instantiate(menuPrefabs, menuParentObj);
+
+                if (menuPrefabs != mainMenuPrefabs)
+                {
+                    menuPrefabs.gameObject.SetActive(false);
+                }
+                else
+                {
+                    OpenMenu(menuInstance);
+                }
             }
-            if (menuPrefabs != menuParentObj)
-            {
-                menuPrefabs.gameObject.SetActive(false);
-            }
-            else
-            {
-                OpenMenu(menuInstance);
-            }
+            
         }
    }
     public void OpenMenu(Menu menuInstance)

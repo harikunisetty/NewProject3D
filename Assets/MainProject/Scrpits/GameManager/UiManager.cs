@@ -21,7 +21,6 @@ public class UiManager : MonoBehaviour
         scoreText.text = "Score: " + GameManager.Instance.Score.ToString();
     }
 
-    // Update is called once per frame
     public void PlayerHealthUI(float value)
     {
         pHealthFill.fillAmount = value * 0.01f;

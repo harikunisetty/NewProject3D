@@ -14,20 +14,20 @@ public class MainMenu :Menu<MainMenu>
 
     public void SettingButton()
     {
-        Menu settingMenu = transform.parent.Find("Settings Menu(Clone)").GetComponent<SettingsMenu>();
-
-        if (MenuManager.Instance != null && settingMenu != null)
+        SettingsMenu settings = transform.parent.Find("Settings_Menu(Clone)").GetComponent<SettingsMenu>();
+        if (MenuManager.Instance != null && SettingsMenu.Instance != null)
         {
             Debug.Log("Setting Button Pressed");
-            MenuManager.Instance.OpenMenu(settingMenu);
+            MenuManager.Instance.OpenMenu(SettingsMenu.Instance);
         }
     }
 
     public void CreditButton()
     {
-        if (MenuManager.Instance != null && CreditsMenu.Instance != null)
+        CreditsMenu credits = transform.parent.Find("CREDIT_MENU(Clone)").GetComponent<CreditsMenu>();
+        if (MenuManager.Instance != null && credits != null)
         {
-            MenuManager.Instance.OpenMenu(CreditsMenu.Instance);
+            MenuManager.Instance.OpenMenu(credits);
         }
     }
 
