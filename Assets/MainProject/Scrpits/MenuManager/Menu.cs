@@ -25,21 +25,21 @@ public abstract class Menu<T> : Menu where T : Menu<T>
 
 public abstract class Menu : MonoBehaviour
 {
-    //private static Menu instance;
-    //public static Menu Instance { get { return instance; } }
+    private static Menu instance;
+    public static Menu Instance { get { return instance; } }
 
-    //void Awake()
-    //{
-    //    if (Instance != null)
-    //        DestroyImmediate(this.gameObject);
-    //    else
-    //        instance = this;
-    //}
+    void Awake()
+    {
+       if (Instance != null)
+           DestroyImmediate(this.gameObject);
+        else
+            instance = this;
+    }
 
-    //void OnDestory()
-    //{
-    //    instance = null;
-    //}
+    void OnDestory()
+    {
+       instance = null;
+    }
 
     public virtual void BackButton()
     {

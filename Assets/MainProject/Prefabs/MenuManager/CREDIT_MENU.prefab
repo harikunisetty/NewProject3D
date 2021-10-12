@@ -850,7 +850,7 @@ GameObject:
   - component: {fileID: 1060540112092292327}
   - component: {fileID: 1060540112092292324}
   - component: {fileID: 1060540112092292325}
-  - component: {fileID: 6219822166474016339}
+  - component: {fileID: 514394763066433149}
   m_Layer: 5
   m_Name: CREDIT_MENU
   m_TagString: Untagged
@@ -939,7 +939,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6219822166474016339
+--- !u!114 &514394763066433149
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1072,8 +1072,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6219822166474016339}
-        m_TargetAssemblyTypeName: CreditsMenu, Assembly-CSharp
+      - m_Target: {fileID: 514394763066433149}
+        m_TargetAssemblyTypeName: Creditsmenu, Assembly-CSharp
         m_MethodName: BackButton
         m_Mode: 1
         m_Arguments:

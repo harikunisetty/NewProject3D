@@ -5,6 +5,8 @@ using UnityEngine;
 public class Resume_Puse : MonoBehaviour
 {
     [SerializeField] GameObject ResumeBg;
+    [SerializeField] GameObject PuseBg;
+    [SerializeField] static bool GameIsPaused;
 
     void Start()
     {
@@ -19,7 +21,7 @@ public class Resume_Puse : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (ResumeManager.Instance.isPaused)
+            if (GameIsPaused)
             {
                 Resume();
             }
@@ -27,14 +29,18 @@ public class Resume_Puse : MonoBehaviour
                 Pause();
         }
     }
-    private void Resume()
+    public void Resume()
     {
         ResumeBg.gameObject.SetActive(false);
+        PuseBg.gameObject.SetActive(true);
         Time.timeScale = 1f;
+        GameIsPaused = false;
     }
-    private void Pause()
+    public void Pause()
     {
         ResumeBg.gameObject.SetActive(true);
+        PuseBg.gameObject.SetActive(false);
         Time.timeScale = 0.0f;
+        GameIsPaused = true;
     }
 }
