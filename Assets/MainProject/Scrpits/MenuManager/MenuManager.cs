@@ -7,7 +7,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] MainMenu mainMenuPrefabs;
     [SerializeField] SettingsMenu settingsMenu;
     [SerializeField] Creditsmenu creditsMenu;
-    [SerializeField] GameMenu gameMenu;
+    [SerializeField] GameMenu gameMenuPrefab;
+    [SerializeField] PauseMenuPrefab pauseGameMenu;
     [SerializeField] Transform menuParentObj;
 
     [Header("Stack")]
@@ -16,7 +17,6 @@ public class MenuManager : MonoBehaviour
 
     [Header("MenuManager")]
     private static MenuManager instance;
-    //private Menu menuInstance;
 
     public static MenuManager Instance { get => instance; }
 
@@ -41,24 +41,26 @@ public class MenuManager : MonoBehaviour
 
    void CreateMenu()
    {
-        if (menuParentObj != null)
+        if (menuParentObj == null)
         {
-            return;
+            GameObject menuObj = new GameObject("Menu");
+
+            menuParentObj = menuObj.transform;
         }
 
-        GameObject menuObj = new GameObject("Menu");
-        menuParentObj = menuObj.transform;
+        DontDestroyOnLoad(menuParentObj);
 
-        Menu[] menus = { mainMenuPrefabs, settingsMenu, creditsMenu, gameMenu };
-        foreach(Menu menuPrefabs in menus)
+        Menu[] menusPrefabs = { mainMenuPrefabs, settingsMenu, creditsMenu, gameMenuPrefab, pauseGameMenu};
+
+        foreach(Menu menuPrefab in menusPrefabs)
         {
-            if (menuPrefabs != null)
+            if (menuPrefab != null)
             {
-                Menu menuInstance = Instantiate(menuPrefabs, menuParentObj);
+                Menu menuInstance = Instantiate(menuPrefab, menuParentObj);
 
-                if (menuPrefabs != mainMenuPrefabs)
+                if (menuPrefab != mainMenuPrefabs)
                 {
-                    menuPrefabs.gameObject.SetActive(false);
+                    menuPrefab.gameObject.SetActive(false);
                 }
                 else
                 {

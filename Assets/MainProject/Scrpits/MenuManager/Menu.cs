@@ -5,42 +5,34 @@ using UnityEngine;
 public abstract class Menu<T> : Menu where T : Menu<T>
 {
     private static T instance;
-    public static T Instance => instance;
-
+    public static T Instance { get { return instance; } }
     protected virtual void Awake()
     {
         if (Instance != null)
-            DestroyImmediate(this.gameObject);
+        {
+            Destroy(gameObject);
+        }
         else
+        {
             instance = (T)this;
-
-        DontDestroyOnLoad(this);
+        }
     }
-
     protected virtual void OnDestory()
     {
         instance = null;
     }
- }
+    public static void Open()
+    {
+        if(MenuManager.Instance != null && Instance != null)
+        {
+            MenuManager.Instance.OpenMenu(Instance);
+        }
+    }
+}
 
+/*[RequireComponent(typeof(Canvas))]*/
 public abstract class Menu : MonoBehaviour
 {
-    private static Menu instance;
-    public static Menu Instance { get { return instance; } }
-
-    void Awake()
-    {
-       if (Instance != null)
-           DestroyImmediate(this.gameObject);
-        else
-            instance = this;
-    }
-
-    void OnDestory()
-    {
-       instance = null;
-    }
-
     public virtual void BackButton()
     {
         if (MenuManager.Instance != null)

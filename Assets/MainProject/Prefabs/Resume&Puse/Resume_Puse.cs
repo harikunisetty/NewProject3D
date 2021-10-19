@@ -10,7 +10,7 @@ public class Resume_Puse : MonoBehaviour
 
     void Start()
     {
-        ResumeBg.gameObject.SetActive(false);
+        ResumeBg.gameObject.SetActive(false); 
     }
 
     void Update()
@@ -31,7 +31,7 @@ public class Resume_Puse : MonoBehaviour
     }
     public void Resume()
     {
-        ResumeBg.gameObject.SetActive(false);
+        ResumeBg.gameObject.SetActive(false); 
         PuseBg.gameObject.SetActive(true);
         Time.timeScale = 1f;
         GameIsPaused = false;

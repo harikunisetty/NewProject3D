@@ -10,25 +10,18 @@ public class MainMenu :Menu<MainMenu>
         {
             GameManager.Instance.LoadNextLevel();
         }
+        GameMenu.Open();
     }
 
     public void SettingButton()
     {
-        SettingsMenu settings = transform.parent.Find("Settings_Menu(Clone)").GetComponent<SettingsMenu>();
-        if (MenuManager.Instance != null && settings != null)
-        {
-            Debug.Log("Setting Button Pressed");
-            MenuManager.Instance.OpenMenu(settings);
-        }
+        SettingsMenu.Open();
+        Debug.Log("touch settings menu");
     }
 
     public void CreditButton()
     {
-        Creditsmenu credits = transform.parent.Find("CREDIT_MENU(Clone)").GetComponent<Creditsmenu>();
-        if (MenuManager.Instance != null && credits != null)
-        {
-            MenuManager.Instance.OpenMenu(credits);
-        }
+        Creditsmenu.Open();
     }
 
     public override void BackButton()

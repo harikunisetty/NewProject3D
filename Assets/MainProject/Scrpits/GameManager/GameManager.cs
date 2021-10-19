@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
     {
         score += value; // Variable value
 
-       UiManager.Instance.UpdateScoreUI(); // UI
+     GameMenu.Instance.UpdateScoreUI(); // UI
 
         // Save Playe Score Data
         PlayerPrefs.SetInt("PlayerScore", Score);

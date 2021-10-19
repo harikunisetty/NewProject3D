@@ -1,23 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameMenu : Menu<GameMenu>
 {
-    public void PauseGame ()
+    [Header("Score")]
+    [SerializeField] Text scoreText;
+
+    public static GameMenu instance;
+
+    public void Awake()
     {
-        Time.timeScale = 0;
-        // Get Pause Menu
-       // MenuManager.Instance.OpenMenu(PauseMenu.Instance);
+        if (Instance != null)
+        {
+            DestroyImmediate(this.gameObject);
+            return;
+        }
+        else
+            instance = this;
     }
 
-    public void ResumeGame ()
+    public void Start()
     {
-        Time.timeScale = 1;
+        scoreText.text = "Score: " + GameManager.Instance.Score.ToString();
+    }
 
-        if(MenuManager.Instance != null)
-        {
-            MenuManager.Instance.CloseMenu();
-        }
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;
+        PauseMenuPrefab.Open();
+    }
+
+    public void UpdateScoreUI()
+    {
+        scoreText.text = "Score: " + GameManager.Instance.Score.ToString();
     }
 }
