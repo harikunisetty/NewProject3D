@@ -23,22 +23,34 @@ public class SettingsMenu : Menu<SettingsMenu>
     }
     public void volumeController(float VolumeValue)
     {
-        PlayerPrefs.SetFloat("Volume", VolumeValue);
+        //PlayerPrefs.SetFloat("Volume", VolumeValue);
+        if (dataManager != null)
+            dataManager.Volume = VolumeValue;
     }
     public void Vibrations()
     {
         vibrations = !vibrations;
         vibrationsText.text = vibrations.ToString();
+
+        if (dataManager != null)
+            dataManager.Vibrations = vibrations;
     }
     public override void BackButton()
     {
         base.BackButton();
+
+        if (dataManager != null)
+            dataManager.Save();
     }
     private void LoadData()
     {
-        if (volumeSlider == null || vibrationsText == null)
+        if (volumeSlider == null || vibrationsText == null || dataManager == null)
             return;
-        volumeSlider.value = PlayerPrefs.GetFloat("Volume");
-        vibrationsText.text = PlayerPrefs.GetString("Vibration");
+
+        //volumeSlider.value = PlayerPrefs.GetFloat("Volume");
+        //vibrationsText.text = PlayerPrefs.GetString("Vibration");
+
+        volumeSlider.value = dataManager.Volume;
+        vibrationsText.text = dataManager.Vibrations.ToString();
     }
 }

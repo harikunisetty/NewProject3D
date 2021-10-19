@@ -60,7 +60,7 @@ public class MenuManager : MonoBehaviour
 
                 if (menuPrefab != mainMenuPrefabs)
                 {
-                    menuPrefab.gameObject.SetActive(false);
+                    menuInstance.gameObject.SetActive(false);
                 }
                 else
                 {

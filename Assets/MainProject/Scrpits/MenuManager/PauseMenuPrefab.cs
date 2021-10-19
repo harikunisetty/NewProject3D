@@ -6,12 +6,12 @@ using UnityEngine.SceneManagement;
 public class PauseMenuPrefab : Menu<PauseMenuPrefab>
 {
     [SerializeField] int mainMenuBuildIndex=0;
-   public void Resume()
+    public void Resume()
     {
         Time.timeScale = 1;
         base.BackButton();
     }
-   public void Restart()
+    public void Restart()
     {
         Time.timeScale = 1;
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class DataManager : MonoBehaviour
 {
     public SaveData saveData;
-
+    public SaveJason jsonFile;
     public float Volume
     {
         get { return saveData.volume; }
@@ -21,9 +21,21 @@ public class DataManager : MonoBehaviour
     private void Awake()
     {
         saveData = new SaveData();
+        jsonFile = new SaveJason();
     }
 
-    private void OnLevelWasLoaded()
+    public void Save()
     {
+        jsonFile.SaveDataToFile(saveData);
+    }
+
+    public void Load()
+    {
+        jsonFile.LoadDataToFile(saveData);
+    }
+
+    public void Delete()
+    {
+        jsonFile.DeleteFile();
     }
 }

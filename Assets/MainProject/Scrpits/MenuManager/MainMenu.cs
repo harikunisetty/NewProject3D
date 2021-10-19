@@ -16,7 +16,6 @@ public class MainMenu :Menu<MainMenu>
     public void SettingButton()
     {
         SettingsMenu.Open();
-        Debug.Log("touch settings menu");
     }
 
     public void CreditButton()
