@@ -1,20 +1,23 @@
 using UnityEngine;
 using System.IO;
+using System.Text;
+using System.Security.Cryptography;
 public class SaveJason
 {
-    private static readonly string fileName = "SaveGameData01.sav";
-
-    // File + File Path
+    private static readonly string fileName = "SaveGameData01.Sav";//File + File Path
     public static string GetFileName()
     {
-        return Application.persistentDataPath + "/" + fileName;
+        return Application.persistentDataPath + "/" + fileName; 
     }
-
-    // Save File
     public void SaveDataToFile(SaveData data)
     {
+        data.hashvalue = string.Empty;
+
         string json = JsonUtility.ToJson(data);
         string file = GetFileName();
+
+        string hashString = GetSHAH256(json);
+        Debug.Log(hashString);
 
         FileStream fileStream = new FileStream(file, FileMode.Create);
 
@@ -23,15 +26,12 @@ public class SaveJason
             writer.Write(json);
         }
     }
-
-    // Get File
-    public bool LoadDataToFile(SaveData data)
+    public bool LoadDataToFile(SaveData data)   // Get File
     {
         string loadFile = GetFileName();
-
         if(File.Exists(loadFile))
         {
-            using (StreamReader reader = new StreamReader(loadFile))
+            using(StreamReader reader = new StreamReader(loadFile))
             {
                 string json = reader.ReadToEnd();
                 JsonUtility.FromJsonOverwrite(json, data);
@@ -40,10 +40,26 @@ public class SaveJason
         }
         return false;
     }
-
-    // Delete File
-    public void DeleteFile()
+    public void DeleteFile() // Delete File
     {
         File.Delete(GetFileName());
     }
+    #region Cryptography
+    public string GetHexStringFromHash(byte[] hash)
+    {
+        string hexString = string.Empty;
+        foreach (byte b in hash)
+        {
+            hexString += b.ToString("x2");
+        }
+        return hexString;
+    }
+    public string GetSHAH256(string text)
+    {
+        byte[] textToBytes = Encoding.UTF8.GetBytes(text);
+        SHA256Managed myShah256 = new SHA256Managed();
+        byte[] hasvalues = myShah256.ComputeHash(textToBytes);
+        return GetHexStringFromHash(hasvalues);
+    }
+    #endregion
 }

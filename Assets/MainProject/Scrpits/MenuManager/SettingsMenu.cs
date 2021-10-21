@@ -6,34 +6,52 @@ using UnityEngine.UI;
 public class SettingsMenu : Menu<SettingsMenu>
 {
     [Header("Volume")]
+
     [SerializeField] Slider volumeSlider;
 
     [Header("Vibrations")]
+
     [SerializeField] bool vibrations;
+
     [SerializeField] Text vibrationsText;
 
     [Header("Data")]
+
     [SerializeField] DataManager dataManager;
 
     protected override void Awake()
     {
         base.Awake();
+
+        dataManager = Object.FindObjectOfType<DataManager>();
+
         LoadData();
+        Debug.Log(Application.persistentDataPath);
 
     }
-    public void volumeController(float VolumeValue)
+    public void volumeController(float Volume)
     {
         //PlayerPrefs.SetFloat("Volume", VolumeValue);
-        if (dataManager != null)
-            dataManager.Volume = VolumeValue;
+
+        if (dataManager == null)
+            return;
+
+        dataManager.Volume = Volume;
     }
     public void Vibrations()
     {
+        if (dataManager == null)
+            return;
+
         vibrations = !vibrations;
-        vibrationsText.text = vibrations.ToString();
+
+        if(vibrations)
+            vibrationsText.text = "ON";
+        else
+            vibrationsText.text = "OFF";
 
         if (dataManager != null)
-            dataManager.Vibrations = vibrations;
+        dataManager.Vibrations = vibrations;
     }
     public override void BackButton()
     {
@@ -44,12 +62,10 @@ public class SettingsMenu : Menu<SettingsMenu>
     }
     private void LoadData()
     {
-        if (volumeSlider == null || vibrationsText == null || dataManager == null)
+        if (dataManager == null || volumeSlider == null || vibrationsText == null)
             return;
 
-        //volumeSlider.value = PlayerPrefs.GetFloat("Volume");
-        //vibrationsText.text = PlayerPrefs.GetString("Vibration");
-
+        dataManager.Load();
         volumeSlider.value = dataManager.Volume;
         vibrationsText.text = dataManager.Vibrations.ToString();
     }
