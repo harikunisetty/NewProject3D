@@ -44,14 +44,16 @@ public class SettingsMenu : Menu<SettingsMenu>
             return;
 
         vibrations = !vibrations;
+        dataManager.Vibrations = vibrations;
+       
 
-        if(vibrations)
+        if (vibrations)
             vibrationsText.text = "ON";
         else
             vibrationsText.text = "OFF";
 
-        if (dataManager != null)
-        dataManager.Vibrations = vibrations;
+ 
+       
     }
     public override void BackButton()
     {
@@ -67,6 +69,10 @@ public class SettingsMenu : Menu<SettingsMenu>
 
         dataManager.Load();
         volumeSlider.value = dataManager.Volume;
-        vibrationsText.text = dataManager.Vibrations.ToString();
+        if (dataManager.Vibrations)
+            vibrationsText.text = "ON";
+        else
+            vibrationsText.text = "OFF";
+       /* vibrationsText.text = dataManager.Vibrations.ToString();*/
     }
 }

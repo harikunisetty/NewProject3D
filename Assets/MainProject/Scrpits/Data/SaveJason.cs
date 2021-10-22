@@ -16,8 +16,8 @@ public class SaveJason
         string json = JsonUtility.ToJson(data);
         string file = GetFileName();
 
-        string hashString = GetSHAH256(json);
-        Debug.Log(hashString);
+        data.hashvalue = GetSHAH256(json);
+        json = JsonUtility.ToJson(data);
 
         FileStream fileStream = new FileStream(file, FileMode.Create);
 
@@ -35,10 +35,28 @@ public class SaveJason
             {
                 string json = reader.ReadToEnd();
                 JsonUtility.FromJsonOverwrite(json, data);
+
+                if (CheckData(json))
+                    JsonUtility.FromJsonOverwrite(json, data);
+                else
+                    Debug.LogError("Data Edited");
             }
             return true;
         }
         return false;
+    }
+    public bool CheckData(string json)
+    {
+        SaveData tempData = new SaveData();
+        JsonUtility.FromJsonOverwrite(json, tempData);
+
+        string oldHash = tempData.hashvalue;
+        tempData.hashvalue = string.Empty;
+
+        string tempJson = JsonUtility.ToJson(tempData);
+        string newHash = GetSHAH256(tempJson);
+
+        return (oldHash == newHash);
     }
     public void DeleteFile() // Delete File
     {
