@@ -15,7 +15,7 @@ public class MainMenu :Menu<MainMenu>
 
     public void SettingButton()
     {
-        SettingsMenu.Open();
+       SettingsMenu.Open();
     }
 
     public void CreditButton()
